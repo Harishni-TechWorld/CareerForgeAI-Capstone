@@ -1,94 +1,267 @@
-# careerforge-ai
+ # 🚀 CareerForge AI
 
-Simple ReAct agent
-Agent generated with `agents-cli` version `1.0.0`
+> **A Multi-Agent Career Development Platform built with Google Agent Development Kit (Google ADK)**
 
-## Project Structure
+CareerForge AI is an intelligent multi-agent platform that helps students and aspiring software engineers prepare for internships and entry-level software engineering roles through personalized AI-powered career guidance.
 
-```
-careerforge-ai/
-├── app/         # Core agent code
-│   ├── agent.py               # Main agent logic
-│   ├── fast_api_app.py        # FastAPI Backend server
-│   └── app_utils/             # App utilities and helpers
-├── tests/                     # Unit, integration, and load tests
-├── GEMINI.md                  # AI-assisted development guide
-└── pyproject.toml             # Project dependencies
-```
-
-> 💡 **Tip:** Use [Antigravity CLI](https://antigravity.google/) for AI-assisted development - project context is pre-configured in `GEMINI.md`.
-
-## Requirements
-
-Before you begin, ensure you have:
-- **uv**: Python package manager (used for all dependency management in this project) - [Install](https://docs.astral.sh/uv/getting-started/installation/) ([add packages](https://docs.astral.sh/uv/concepts/dependencies/) with `uv add <package>`)
-- **agents-cli**: Agents CLI - Install with `uv tool install google-agents-cli`
-- **Google Cloud SDK**: For GCP services - [Install](https://cloud.google.com/sdk/docs/install)
-
-
-## Quick Start
-
-Install `agents-cli` and its skills if not already installed:
-
-```bash
-uvx google-agents-cli setup
-```
-
-Install required packages:
-
-```bash
-agents-cli install
-```
-
-Test the agent with a local web server:
-
-```bash
-agents-cli playground
-```
-
-You can also use features from the [ADK](https://adk.dev/) CLI with `uv run adk`.
-
-## Commands
-
-| Command              | Description                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------- |
-| `agents-cli install` | Install dependencies using uv                                                         |
-| `agents-cli playground` | Launch local development environment                                                  |
-| `agents-cli lint`    | Run code quality checks                                                               |
-| `agents-cli eval`    | Evaluate agent behavior (generate, grade, analyze, and more — see `agents-cli eval --help`) |
-| `uv run pytest tests/unit tests/integration` | Run unit and integration tests                                                        |
-| `agents-cli deploy`  | Deploy agent to Agent Runtime                                                                |
-| `agents-cli publish gemini-enterprise` | Register deployed agent to Gemini Enterprise                    || [A2A Inspector](https://github.com/a2aproject/a2a-inspector) | Launch A2A Protocol Inspector                                                        |
-
-## 🛠️ Project Management
-
-| Command | What It Does |
-|---------|--------------|
-| `agents-cli scaffold enhance` | Add CI/CD pipelines and Terraform infrastructure |
-| `agents-cli infra cicd` | One-command setup of entire CI/CD pipeline + infrastructure |
-| `agents-cli scaffold upgrade` | Auto-upgrade to latest version while preserving customizations |
+Using multiple specialized AI agents, the platform generates personalized learning roadmaps, recommends portfolio projects, reviews resumes, prepares users for technical interviews, and tracks learning progress.
 
 ---
 
-## Development
+# 📌 Problem Statement
 
-Edit your agent logic in `app/agent.py` and test with `agents-cli playground` - it auto-reloads on save.
+Students preparing for software engineering careers often struggle with:
 
-## Deployment
+- Choosing the right technologies to learn
+- Building industry-relevant portfolio projects
+- Creating ATS-friendly resumes
+- Preparing for technical interviews
+- Following a structured learning roadmap
 
-```bash
-gcloud config set project <your-project-id>
-agents-cli deploy
+CareerForge AI solves these challenges through collaborative AI agents that work together to provide personalized career guidance.
+
+---
+
+# ✨ Features
+
+- 🤖 Multi-Agent Architecture using Google ADK
+- 🛡️ Security Checkpoint for Prompt Injection Detection
+- 📚 Personalized Learning Roadmaps
+- 💻 Portfolio Project Recommendations
+- 📄 Resume Review & Suggestions
+- 🎯 Technical & Behavioral Interview Preparation
+- 📈 Learning Progress Tracking
+- 🔧 MCP Server Integration
+- 🌐 Interactive Google ADK Web Interface
+
+---
+
+# 🏗️ System Architecture
+
+```
+                     User
+                       │
+                       ▼
+            Security Checkpoint
+                       │
+                       ▼
+              Orchestrator Agent
+                       │
+ ┌────────────┬─────────────┬────────────┐
+ │            │             │            │
+Planner   Learning     Resume      Interview
+ Agent      Agent        Agent         Agent
+ │
+ │
+Project Agent
+ │
+Progress Agent
+ │
+ ▼
+MCP Server
+ │
+ ▼
+Personalized Career Guidance
 ```
 
-To add CI/CD and Terraform, run `agents-cli scaffold enhance`.
-To set up your production infrastructure, run `agents-cli infra cicd`.
+---
 
-## Observability
+# 🤖 AI Agents
 
-Built-in telemetry exports to Cloud Trace, BigQuery, and Cloud Logging.
+### 🎯 Orchestrator Agent
+Coordinates the workflow and routes every request to the appropriate specialist agent.
 
-## A2A Inspector
+### 🗺️ Planner Agent
+Creates personalized career roadmaps.
 
-This agent supports the [A2A Protocol](https://a2a-protocol.org/). Use the [A2A Inspector](https://github.com/a2aproject/a2a-inspector) to test interoperability.
-See the [A2A Inspector docs](https://github.com/a2aproject/a2a-inspector) for details.
+### 📚 Learning Agent
+Recommends learning resources and study plans.
+
+### 💻 Project Agent
+Suggests real-world portfolio projects.
+
+### 📄 Resume Agent
+Analyzes resumes and provides improvement suggestions.
+
+### 🎤 Interview Agent
+Generates technical and behavioral interview practice.
+
+### 📈 Progress Agent
+Tracks completed milestones and recommends next learning goals.
+
+---
+
+# 🔒 Security
+
+Every user request passes through a Security Checkpoint that performs:
+
+- Prompt Injection Detection
+- Input Validation
+- Secure Request Routing
+- Security Monitoring
+
+---
+
+# 🔧 MCP Server
+
+The integrated MCP Server provides reusable tools for:
+
+- Career Resources
+- Learning Recommendations
+- Interview Questions
+- Portfolio Projects
+- Career Roadmaps
+
+---
+
+# 🛠️ Technology Stack
+
+| Category | Technology |
+|----------|------------|
+| AI Framework | Google Agent Development Kit (Google ADK) |
+| Backend | Python, FastAPI |
+| Frontend | Google ADK Web UI |
+| AI Model | Google Gemini |
+| Protocol | MCP (Model Context Protocol) |
+| Version Control | Git & GitHub |
+
+---
+
+# 📂 Project Structure
+
+```
+careerforge-ai/
+├── app/
+│   ├── agent.py
+│   ├── fast_api_app.py
+│   └── app_utils/
+├── tests/
+├── deployment/
+├── GEMINI.md
+├── pyproject.toml
+├── Dockerfile
+├── README.md
+└── agents-cli-manifest.yaml
+```
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+Before running the project, install:
+
+- Python 3.11+
+- uv
+- Google Agent Development Kit (ADK)
+- Google Gemini API Key
+
+---
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Harishni-TechWorld/CareerForgeAI-Capstone.git
+
+cd CareerForgeAI-Capstone
+```
+
+---
+
+## Install Dependencies
+
+```bash
+uv sync
+```
+
+---
+
+## Configure Environment Variables
+
+Create a `.env` file in the project root.
+
+```env
+GOOGLE_API_KEY=YOUR_GEMINI_API_KEY
+```
+
+---
+
+## Run the Application
+
+Start the Google ADK server.
+
+```bash
+uv run adk web
+```
+
+---
+
+## 🌐 Open the Application
+
+After the server starts successfully, open the Google ADK Web Interface:
+
+```
+http://localhost:18081
+```
+
+---
+
+# 📋 Useful Commands
+
+| Command | Description |
+|----------|-------------|
+| `uv sync` | Install dependencies |
+| `uv run adk web` | Start CareerForge AI |
+| `uv run pytest tests` | Run tests |
+
+---
+
+# 🎥 Demo
+
+CareerForge AI demonstrates:
+
+- Multi-Agent Collaboration
+- Secure AI Workflows
+- Personalized Career Roadmaps
+- Resume Analysis
+- Interview Preparation
+- Portfolio Project Recommendations
+- MCP Server Integration
+
+---
+
+# 🚀 Future Improvements
+
+- Authentication
+- Resume Upload
+- Persistent User Profiles
+- Cloud Deployment
+- Analytics Dashboard
+- Real-time Progress Tracking
+
+---
+
+# 👩‍💻 Author
+
+**Harishni C**
+
+Google Agent Development Kit (Google ADK) Capstone Project
+
+---
+
+# 🙏 Acknowledgements
+
+This project was built using:
+
+- Google Agent Development Kit (Google ADK)
+- Google Gemini
+- FastAPI
+- Python
+- MCP (Model Context Protocol)
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
