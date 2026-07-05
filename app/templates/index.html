@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerForge AI Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+/* Professional Light Theme */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #212529;
+}
+.header {
+  background: #ffffff;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #0d6efd;
+}
+.header .tagline {
+  margin-top: .5rem;
+  font-size: 1rem;
+  color: #6c757d;
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 960px;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+.chat-section {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+.conversation {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.message {
+  padding: .75rem 1rem;
+  border-radius: 8px;
+  margin: .25rem 0;
+  max-width: 80%;
+  line-height: 1.4;
+}
+.message.user {
+  background: #e7f1ff;
+  align-self: flex-end;
+  color: #0d6efd;
+}
+.message.assistant {
+  background: #f1f3f5;
+  align-self: flex-start;
+  color: #212529;
+}
+.chat-form {
+  display: flex;
+  gap: .5rem;
+}
+.chat-form input {
+  flex: 1;
+  padding: .5rem .75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.chat-form button {
+  background: #0d6efd;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.chat-form button:hover {
+  background: #0b5ed7;
+}
+.workflow-section {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+}
+.workflow-section h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #212529;
+}
+.mermaid {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+.footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: .875rem;
+  color: #6c757d;
+}
+@media (max-width: 768px) {
+  .main-content {margin: 1rem;}
+  .chat-section {height: 400px;}
+}
+</style>
+</head>
+<body>
+  <header class="header">
+    <h1>CareerForge AI</h1>
+    <p class="tagline">Your personalized career development coach</p>
+  </header>
+
+  <main class="main-content">
+    <section class="chat-section">
+      <div id="conversation" class="conversation" aria-live="polite"></div>
+      <form id="chat-form" class="chat-form" autocomplete="off">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Ask a career question…"
+          aria-label="User query"
+          title="Type your career‑related question and press Enter"
+        />
+        <button type="submit" title="Send your query">Send</button>
+      </form>
+    </section>
+
+    <section class="workflow-section">
+      <h2>Agent Workflow</h2>
+      <!-- Simple Mermaid diagram – the playground renders Mermaid automatically -->
+      <pre class="mermaid">
+        graph TD
+        A[Security Checkpoint] --> B[Orchestrator]
+        B --> C[Resume Agent]
+        B --> D[Interview Agent]
+        B --> E[Planner Agent]
+        C --> F[Human Approval]
+        D --> F
+        E --> F
+        F --> G[Final Output]
+      </pre>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>© 2026 CareerForge AI – built with Google ADK</small>
+  </footer>
+
+  <!-- Minimal client‑side script for the chat UI (no backend changes) -->
+  <script>
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('user-input');
+    const convo = document.getElementById('conversation');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const query = input.value.trim();
+      if (!query) return;
+      addMessage('user', query);
+      input.value = '';
+      const resp = await fetch('/a2a/careerforge-ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: query }] })
+      });
+      const data = await resp.json();
+      const reply = data?.messages?.[0]?.content?.parts?.[0]?.text || 'No response';
+      addMessage('assistant', reply);
+    });
+
+    function addMessage(sender, text) {
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}`;
+      msg.textContent = text;
+      convo.appendChild(msg);
+      convo.scrollTop = convo.scrollHeight;
+    }
+  </script>
+</body>
+</html>
